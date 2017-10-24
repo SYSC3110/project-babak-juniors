@@ -104,16 +104,22 @@ public class KNN {
 		return h1.getSqrFt()-h2.getSqrFt();
 	}
 	public void addHouse(Coordinates c, SqrFt sf, Age a, int p) {
-		houses.add(new house(c, sf, a, p));
+		houses.add(new House(c, a, sf, p));
 	}
 	public void setNewHouse(Coordinates c, SqrFt sf, Age a) {
-		newHouse= new House(c, sf, a);
+		newHouse= new House(c, a, sf);
 	}
 	public void resetNN() {
 		nearestNeighbors=null;
 	}
 	public void setNewHousePrice() {
 		newHouse.setPrice(findPrice());
+	}
+	public ArrayList<House> getHouses(){
+		return (ArrayList<House>) houses;
+	}
+	public House getNewHouse() {
+		return newHouse;
 	}
 /**
  * (Coordinates c, Age a, SqrFt s, int p)
@@ -125,8 +131,8 @@ public class KNN {
 		running.addHouse(new Coordinates(30,100),new SqrFt(800), new Age("New"), 400000);
 		running.setNewHouse(new Coordinates(15, 20), new SqrFt(1000), new Age("New"));		
 		running.resetNN();
-		running.findKNN(1, newHouse, houses);
+		running.findKNN(1, running.getNewHouse(), running.getHouses());
 		running.setNewHousePrice();
-		
+		System.out.println("The price of the new house is: "+ running.getNewHouse().getPrice());
 	}
 }
